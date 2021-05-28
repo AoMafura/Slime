@@ -56,6 +56,8 @@ backgroundIMG[4].src = './Assets/background5.png';
 
 var heartIMG = new Image();
 heartIMG.src = './Assets/heartIMG.png'
+var healIMG = new Image();
+healIMG.src = './Assets/Heal1.png'
 
 //FireBall Assets-------------------------------
 var fireballIMG = new Array();
@@ -94,6 +96,7 @@ function sound(src) {
 }
 
 explodeSound = new sound("./Assets/explodeSound.mp3");
+glassSound = new sound("./Assets/glassSound.mp3");
 
 gameTheme = new Array();
 gameTheme[0] = new sound("./Assets/gameTheme.mp3");

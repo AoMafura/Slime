@@ -30,9 +30,9 @@ export default class Health
 
     //------------------- Methods ---------------------------
 
-    takeDamage(){
-        // this.health--;
-        // painSound[this.damageSound % painCount].replay(this.volume);
+    takeDamage(heal){
+        this.health += heal;
+        painSound[this.damageSound % painCount].replay(this.volume);
         this.damageSound++;
         return this.health;
     }

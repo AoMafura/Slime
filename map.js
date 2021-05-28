@@ -69,18 +69,22 @@ export default class Map
                     yPos = (this.wallSize * y) + lane;
 
                     if(xPos < this.canvasXSize && xPos > -this.wallSize){ //Prevents drawing walls outside the Canvas.
-                        canvas.drawImage(fireballIMG[this.map[y][x]], xPos - adjustPos, yPos - adjustPos, wallSize, wallSize);
-                        if(xPos < 0 && xPos > -10){
-                            this.destroyWall(y, x);
-                        }else if(xPos < -20 && xPos >= -70){
-                            this.destroyWall(y, x);
-                            if(this.map[y][x] <= 0){
-                                health.takeDamage();
+                        if(this.map[y][x]<=3){
+                            canvas.drawImage(fireballIMG[this.map[y][x]], xPos - adjustPos, yPos - adjustPos, wallSize, wallSize);
+                            if(xPos < 0 && xPos > -10){
+                                this.destroyWall(y, x);
+                            }else if(xPos < -20 && xPos >= -70){
+                                this.destroyWall(y, x);
+                                if(this.map[y][x] <= 0){
+                                    health.takeDamage(-1);
+                                }
+                            }else if(this.map[y][x] == 2 && (xPos >= 70 && xPos < 100)){
+                                this.destroyWall(y, x);
+                            }else if(this.map[y][x] == 3 && xPos >= 0 && xPos < 70){
+                                this.destroyWall(y, x);
                             }
-                        }else if(this.map[y][x] == 2 && (xPos >= 70 && xPos < 100)){
-                            this.destroyWall(y, x);
-                        }else if(this.map[y][x] == 3 && xPos >= 0 && xPos < 70){
-                            this.destroyWall(y, x);
+                        }else if(this.map[y][x] == 4){
+                            canvas.drawImage(healIMG, xPos, yPos, this.wallSize, this.wallSize);
                         }
                     }
                     index = (index + 1) % this.mapLength.x;
@@ -108,17 +112,27 @@ export default class Map
     //------------------- Wall Detection -------------------
 
     destroyWall(yIndex, xIndex){
+        var heal = 0;
         if(this.map[yIndex][xIndex] == 1){
             explodeSound.replay(.9);
+            heal -= 1;
+        }else if(this.map[yIndex][xIndex]==4) {
+            glassSound.replay(.9);
+            heal += 1;
         }
         if(this.map[yIndex][xIndex] <= 2){
             this.map[yIndex][xIndex] += 1;
-        }else{
+        }else if(this.map[yIndex][xIndex] == 3){
+            this.map[yIndex][xIndex] = 0;
+        }else if(this.map[yIndex][xIndex] == 4){
+            this.map[yIndex][xIndex] += 1;
+        }else if(this.map[yIndex][xIndex] == 5){
             this.map[yIndex][xIndex] = 0;
         }
+        return heal;
     }
     
-    slashCollision(unit){
+    slashCollision(unit, health){
         var xPos = unit.getXPos(), yPos = unit.getYPos(), unitSize = unit.getSize();
         var xCollision = this.detectCollision(this.mapXPosition, yPos, unitSize, xPos);
         var yIndex;

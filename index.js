@@ -12,7 +12,7 @@ const canvas = elem.getContext("2d");
 const canvasXSize = 1400, canvasYSize = 800;
 
 //----------- Game Elements-------------------
-var currentLevel = 5; //The Level the Player is currently Playing (Level 1 to N)
+var currentLevel = 1; //The Level the Player is currently Playing (Level 1 to N)
 
 //Map Design Variables
 var mapSpeed = 3 + (3 * currentLevel); //Map Speed is automatically adjusted according to current Level
