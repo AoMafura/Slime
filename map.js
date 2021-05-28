@@ -77,7 +77,7 @@ export default class Map
                             }else if(xPos < -20 && xPos >= -70){
                                 this.destroyWall(y, x);
                                 if(this.map[y][x]==0){
-                                    health.takeDamage(-1,0);
+                                    health.takeDamage(-1,1);
                                 }
                                 console.log("M:" + this.map[y][x]);
                                 
@@ -126,6 +126,8 @@ export default class Map
         }else if(this.map[yIndex][xIndex]==5){
             explodeSound.replay(.9);
             enemiSound[this.enemi].replay(.9);
+            this.enemi++;
+            this.enemi%=enemiCount;
             heal -= 1;
         }
 
