@@ -1,9 +1,3 @@
-//-----------Floor Assets---------------
-var floorIMG = new Image();
-floorIMG.src = './Assets/grass.jpg';
-var pathIMG = new Image();
-pathIMG.src = './Assets/dirt.png';
-
 //----------Player Assets----------------
 var unitIMG = new Array();
 
@@ -58,6 +52,10 @@ var heartIMG = new Image();
 heartIMG.src = './Assets/heartIMG.png'
 var healIMG = new Image();
 healIMG.src = './Assets/Heal1.png'
+
+//--------------Enemi Assets--------------
+var enemiIMG = new Image();
+enemiIMG.src = './Assets/Enemi.png'
 
 //FireBall Assets-------------------------------
 var fireballIMG = new Array();
@@ -123,3 +121,9 @@ painSound[3] = new sound("./Assets/damageSound4.mp3");
 painSound[4] = new sound("./Assets/damageSound5.mp3");
 painSound[5] = new sound("./Assets/damageSound6.mp3");
 painCount = 6;
+
+enemiSound = new Array();
+enemiSound[0] = new sound("./Assets/EnemiSound1.mp3");
+enemiSound[1] = new sound("./Assets/EnemiSound2.mp3");
+enemiSound[2] = new sound("./Assets/EnemiSound3.mp3");
+enemiCount = 3;

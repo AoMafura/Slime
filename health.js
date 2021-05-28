@@ -30,11 +30,15 @@ export default class Health
 
     //------------------- Methods ---------------------------
 
-    takeDamage(heal){
-        this.health += heal;
-        painSound[this.damageSound % painCount].replay(this.volume);
-        this.damageSound++;
-        return this.health;
+    takeDamage(heal, type){
+        if(this.health + heal <= this.maxHP){
+            this.health = this.health + heal;
+        }
+        if(type == 1){
+            painSound[this.damageSound % painCount].replay(this.volume);
+            this.damageSound++;
+        }
+        return ;
     }
 
     drawHealth(canvas){

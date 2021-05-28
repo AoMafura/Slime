@@ -58,7 +58,7 @@ function gameLoop(deltatime)
             canvas.clearRect(0,0,1200,800)
             bg.drawBG(canvas);
             level.setPlaying(level.drawMap(canvas, xTravel,currentLevel, health));
-            level.getMap(currentLevel).slashCollision(unit);
+            level.getMap(currentLevel).slashCollision(unit, health);
             unit.draw(canvas, frame, yTravel, xTravel);   
             health.drawHealth(canvas);
             resetCommands();
@@ -66,7 +66,7 @@ function gameLoop(deltatime)
             canvas.clearRect(0,0,1200,800);
             bg.drawBG(canvas);
             level.setPlaying(level.drawMap(canvas, xTravel,currentLevel, health));
-            level.getMap(currentLevel).slashCollision(unit);
+            level.getMap(currentLevel).slashCollision(unit, health);
             unit.draw(canvas, frame, 0, xTravel);
             health.drawHealth(canvas);
             resetCommands();
@@ -87,7 +87,6 @@ function playerCommand(e){
         menu = (menu+1)%2;
         theme.setTheme(currentLevel);
         gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), menu);
-        console.log(menu);
     }else if(e.keyCode == 68 || e.keyCode == 75 || e.keyCode == 76){ // D or K or L (Slash/Attack)
         if(unit.getSlash() <= 0 && xTravel != 0){
             unit.slashCommand();

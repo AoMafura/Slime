@@ -25,6 +25,7 @@ export default class Map
             y: this.map.length - 1
         }
         this.frame = 0;
+        this.enemi = 0;
     }
 
     //------------------- Getters --------------------------
@@ -69,15 +70,17 @@ export default class Map
                     yPos = (this.wallSize * y) + lane;
 
                     if(xPos < this.canvasXSize && xPos > -this.wallSize){ //Prevents drawing walls outside the Canvas.
-                        if(this.map[y][x]<=3){
+                        if(this.map[y][x]<=3 && this.map[y][x]>0){
                             canvas.drawImage(fireballIMG[this.map[y][x]], xPos - adjustPos, yPos - adjustPos, wallSize, wallSize);
                             if(xPos < 0 && xPos > -10){
                                 this.destroyWall(y, x);
                             }else if(xPos < -20 && xPos >= -70){
                                 this.destroyWall(y, x);
-                                if(this.map[y][x] <= 0){
-                                    health.takeDamage(-1);
+                                if(this.map[y][x]==0){
+                                    health.takeDamage(-1,0);
                                 }
+                                console.log("M:" + this.map[y][x]);
+                                
                             }else if(this.map[y][x] == 2 && (xPos >= 70 && xPos < 100)){
                                 this.destroyWall(y, x);
                             }else if(this.map[y][x] == 3 && xPos >= 0 && xPos < 70){
@@ -85,6 +88,8 @@ export default class Map
                             }
                         }else if(this.map[y][x] == 4){
                             canvas.drawImage(healIMG, xPos, yPos, this.wallSize, this.wallSize);
+                        }else if(this.map[y][x] == 5){
+                            canvas.drawImage(enemiIMG, xPos, yPos, this.wallSize, this.wallSize);
                         }
                     }
                     index = (index + 1) % this.mapLength.x;
@@ -115,18 +120,20 @@ export default class Map
         var heal = 0;
         if(this.map[yIndex][xIndex] == 1){
             explodeSound.replay(.9);
-            heal -= 1;
         }else if(this.map[yIndex][xIndex]==4) {
             glassSound.replay(.9);
             heal += 1;
+        }else if(this.map[yIndex][xIndex]==5){
+            explodeSound.replay(.9);
+            enemiSound[this.enemi].replay(.9);
+            heal -= 1;
         }
+
         if(this.map[yIndex][xIndex] <= 2){
             this.map[yIndex][xIndex] += 1;
-        }else if(this.map[yIndex][xIndex] == 3){
-            this.map[yIndex][xIndex] = 0;
-        }else if(this.map[yIndex][xIndex] == 4){
-            this.map[yIndex][xIndex] += 1;
         }else if(this.map[yIndex][xIndex] == 5){
+            this.map[yIndex][xIndex] = 2;
+        }else if(this.map[yIndex][xIndex] >= 3){
             this.map[yIndex][xIndex] = 0;
         }
         return heal;
@@ -144,10 +151,11 @@ export default class Map
         }
         this.frame++;
 
-        if(xCollision >= 0 && unit.getSlash() == unit.getSlashDuration()){ //
+        if(xCollision >= 0 ){ //
             if(unit.getSlash() == unit.getSlashDuration()){
-                explodeSound.replay(.8);
-                this.destroyWall(yIndex, xCollision);
+                health.takeDamage(this.destroyWall(yIndex, xCollision));
+            }else if(this.map[yIndex][xCollision]==5){
+                health.takeDamage(this.destroyWall(yIndex, xCollision));
             }
         }
     }
