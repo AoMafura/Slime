@@ -28,7 +28,7 @@ export default class Theme
             case 3:
             case 4:
                 this.volume = 1;
-                this.currentTheme = 2;
+                this.currentTheme = 3;
                 break;
             case 5:
                 this.volume = 1;

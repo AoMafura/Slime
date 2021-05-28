@@ -15,7 +15,7 @@ const canvasXSize = 1400, canvasYSize = 800;
 var currentLevel = 5; //The Level the Player is currently Playing (Level 1 to N)
 
 //Map Design Variables
-var mapSpeed = 4 + (2 * currentLevel); //Map Speed is automatically adjusted according to current Level
+var mapSpeed = 3 + (3 * currentLevel); //Map Speed is automatically adjusted according to current Level
 
 //Map Lanes Settings Variables
 var mapXStartingPosition = canvasXSize; //Starting X Position of Map/Walls

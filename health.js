@@ -32,7 +32,7 @@ export default class Health
 
     takeDamage(){
         // this.health--;
-        painSound[this.damageSound % painCount].replay(this.volume);
+        // painSound[this.damageSound % painCount].replay(this.volume);
         this.damageSound++;
         return this.health;
     }
