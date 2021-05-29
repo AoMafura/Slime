@@ -29,7 +29,7 @@ const unitStartLane = botLane + wallSize;
 
 var xTravel = 0, yTravel = 0, slash = 0; //Player Command Variables
 var frame = 0;
-const slashDuration = 300/(mapSpeed*2);
+const slashDuration = (150 + (40*currentLevel))/(mapSpeed*2);
 var dmgTaken = 0;
 var unitHP = 3, heartSize = wallSize - 20;
 

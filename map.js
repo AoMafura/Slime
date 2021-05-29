@@ -79,8 +79,6 @@ export default class Map
                                 if(this.map[y][x]==0){
                                     health.takeDamage(-1,1);
                                 }
-                                console.log("M:" + this.map[y][x]);
-                                
                             }else if(this.map[y][x] == 2 && (xPos >= 70 && xPos < 100)){
                                 this.destroyWall(y, x);
                             }else if(this.map[y][x] == 3 && xPos >= 0 && xPos < 70){
