@@ -3,6 +3,7 @@ import Levels from '/level.js';
 import Health from '/health.js';
 import Background from '/background.js';
 import Theme from '/theme.js';
+import Menu from '/menu.js'
 
 const elem = document.querySelector("#game");
 const canvas = elem.getContext("2d");
@@ -12,7 +13,17 @@ const canvas = elem.getContext("2d");
 const canvasXSize = 1400, canvasYSize = 800;
 
 //----------- Game Elements-------------------
-var currentLevel = 5; //The Level the Player is currently Playing (Level 1 to N)
+const GAMESTATE = {
+    PAUSED: 0,
+    INTRO: 2,
+    MENU: 4,
+    CONTROLS: 6,
+    INSTRUCTIONS: 8,
+    LEVELS: 10
+}
+
+var currentLevel = 3; //The Level the Player is currently Playing (Level 1 to N)
+var state = GAMESTATE.INTRO;
 
 //Map Design Variables
 var mapSpeed = 3 + (3 * currentLevel); //Map Speed is automatically adjusted according to current Level
@@ -53,6 +64,9 @@ function gameLoop(deltatime)
 
     if(frame % 1 == 0){
         document.onkeydown = playerCommand;
+
+        
+
         if(yTravel != 0 || slash != 0){
             unit.travelMap(yTravel, topLane, botLane, xTravel);
             canvas.clearRect(0,0,1200,800)
@@ -61,6 +75,10 @@ function gameLoop(deltatime)
             level.getMap(currentLevel).slashCollision(unit, health);
             unit.draw(canvas, frame, yTravel, xTravel);   
             health.drawHealth(canvas);
+
+            let menu = new Menu(canvasXSize, canvasYSize, state, currentLevel)
+            menu.draw(canvas)
+
             resetCommands();
         }else{
             canvas.clearRect(0,0,1200,800);
@@ -69,30 +87,79 @@ function gameLoop(deltatime)
             level.getMap(currentLevel).slashCollision(unit, health);
             unit.draw(canvas, frame, 0, xTravel);
             health.drawHealth(canvas);
+
+            let menu = new Menu(canvasXSize, canvasYSize, state, currentLevel)
+            menu.draw(canvas)
+
             resetCommands();
         } 
     }
     requestAnimationFrame(gameLoop);
 }
 
-var menu = 0;
-
 function playerCommand(e){
     if(e.keyCode == 87 || e.keyCode == 38){ //W or Up 
         yTravel = -(unitSpeed);
+
     }else if(e.keyCode == 83 || e.keyCode == 40){ //S or Down
         yTravel = unitSpeed;
-    }else if(e.keyCode == 32 || e.keyCode == 13 || e.keyCode == 27 && health.getHealth() > 0){ // Space, Enter or Esc (Start/Pause Game)
+
+    }else if(e.keyCode == 32 && health.getHealth() > 0){ // Space, Enter or Esc (Start/Pause Game)
         xTravel += mapSpeed - (xTravel * 2);
-        menu = (menu+1)%2;
+        
+        state = (state+1)%2;
+
         theme.setTheme(currentLevel);
-        gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), menu);
+        gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), state);
+
+    }else if(e.keyCode == 77){ //MENU
+        xTravel = 0;
+
+        state = GAMESTATE.MENU
+
+    }else if(e.keyCode == 67 && state == GAMESTATE.MENU){ //CONTROLS MENU
+            state = GAMESTATE.CONTROLS
+     
+    }else if(e.keyCode == 16 && state == GAMESTATE.MENU){ //CHOOSE A LEVEL MENU
+        state = GAMESTATE.LEVELS
+
+    }else if(e.keyCode == 86 && state == GAMESTATE.MENU){ //HOW TO PLAY MENU
+        state = GAMESTATE.INSTRUCTIONS
+        console.log("HOW TO PLAY")
+
+    }else if(e.keyCode == 49 && state == GAMESTATE.LEVELS){ //HOW TO PLAY MENU
+        currentLevel = 1
+
+        state = GAMESTATE.INTRO
+
+    }else if(e.keyCode == 50 && state == GAMESTATE.LEVELS){ //HOW TO PLAY MENU
+        currentLevel = 2
+
+        state = GAMESTATE.INTRO
+
+    }else if(e.keyCode == 51 && state == GAMESTATE.LEVELS){ //HOW TO PLAY MENU
+        currentLevel = 3
+
+        state = GAMESTATE.INTRO
+
+    }else if(e.keyCode == 52 && state == GAMESTATE.LEVELS){ //HOW TO PLAY MENU
+        currentLevel = 4
+
+        state = GAMESTATE.INTRO
+
+    }else if(e.keyCode == 53 && state == GAMESTATE.LEVELS){ //HOW TO PLAY MENU
+        currentLevel = 5
+        
+        state = GAMESTATE.INTRO
+
     }else if(e.keyCode == 68 || e.keyCode == 75 || e.keyCode == 76){ // D or K or L (Slash/Attack)
         if(unit.getSlash() <= 0 && xTravel != 0){
             unit.slashCommand();
         }
     }
 }
+
+
 
 function resetCommands(){
     yTravel = 0;
@@ -107,10 +174,10 @@ function resetCommands(){
             level.restartLevel(currentLevel);
             health.refreshHealth();
             unit.refreshUnitPos();
-            menu = 0;
+            state = GAMESTATE.INTRO;
             theme.setTheme(currentLevel);
             gameTheme[theme.getCurrentTheme()].restart();
-            gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), menu);
+            gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), state);
     }
 }
 
