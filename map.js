@@ -1,6 +1,4 @@
-import Obstacle from '/obstacle.js';
-import Unit from '/unit.js';
-import Health from '/health.js';
+import Score from './score.js'
 
 export default class Map
 {
@@ -60,6 +58,9 @@ export default class Map
     drawMap(canvas, mapSpeed, health)
     {
         var x, y, xPos, yPos, index = 0, lane = 0, playing = 1, wallSize, adjustSize, adjustPos;
+        let score = new Score()
+
+        score.draw(canvas)
 
         for(x = 0; x < this.mapLength.x; x++){
             for(y = 0; y < this.mapLength.y; y++){
