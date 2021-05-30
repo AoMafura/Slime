@@ -91,6 +91,10 @@ function sound(src) {
     this.restart = function(){
         this.sound.currentTime=0;
     }
+    this.stop = function(volume, menu){
+        this.sound.pause();
+        this.sound.currentTime=0;
+    }
 }
 
 explodeSound = new sound("./Assets/explodeSound.mp3");

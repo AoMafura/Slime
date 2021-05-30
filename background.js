@@ -11,6 +11,15 @@ export default class Background
         this.image = image;
     }
 
+    getBG(){
+        this.image = image;
+    }
+
+    //-----------------------Setter-------------------
+    setBG(level){
+        this.image = backgroundIMG[level-1]
+    }
+
     //----------------------------Methods------------------------------
 
     drawBG(canvas){

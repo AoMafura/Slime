@@ -1,4 +1,5 @@
 import Map from '/map.js';
+import Background from '/background.js';
 
 export default class Levels
 {
@@ -31,14 +32,16 @@ export default class Levels
                         ];
                         
         this.map = [
-                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign1, topLane, botLane, wallSize, wallGap),
-                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign2, topLane, botLane, wallSize, wallGap),
-                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign3, topLane, botLane, wallSize, wallGap),
-                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign4, topLane, botLane, wallSize, wallGap),
-                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign5, topLane, botLane, wallSize, wallGap),
+                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign1, topLane, botLane, wallSize, wallGap,1),
+                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign2, topLane, botLane, wallSize, wallGap,2),
+                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign3, topLane, botLane, wallSize, wallGap,3),
+                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign4, topLane, botLane, wallSize, wallGap,4),
+                        new Map(canvasXSize, canvasYSize, mapXStartingPosition, this.mapDesign5, topLane, botLane, wallSize, wallGap,5),
                     ];
         this.playing = 1;
+        this.currentLevel = 1;
         this.canvasXSize = canvasXSize;
+        this.bg = new Background(canvasXSize, canvasYSize, 0, 0, backgroundIMG[this.currentLevel-1]);
     }
 
     //---------------------Getter----------------------------
@@ -51,10 +54,18 @@ export default class Levels
         return this.playing;
     }
 
+    getCurrentLevel(){
+        return this.currentLevel;
+    }
+    
+    getBG(){
+        return this.bg;
+    }
+
     //---------------------Setter----------------------------
 
-    setMapIndex(level, x, y, value){
-        switch(level){
+    setMapIndex(x, y, value){
+        switch(this.currentLevel){
             case 1:    
                 this.mapDesign1[y][x] = value;
                 break;
@@ -77,27 +88,32 @@ export default class Levels
         this.playing = play;
     }
 
+    setCurrentLevel(level){
+        this.currentLevel = level;
+        this.bg.setBG(this.currentLevel);
+    }
+
     //------------------- Methods ---------------------------
 
-    restartLevel(level){
+    restartLevel(){
         this.setPlaying(1);
-        this.refreshLevel(level);
+        this.refreshLevel(this.currentLevel);
 
-        switch(level){
+        switch(this.currentLevel){
             case 1:
-                this.map[level-1].restartMap(this.mapDesign1);
+                this.map[this.currentLevel-1].restartMap(this.mapDesign1);
                 break;
             case 2:
-                this.map[level-1].restartMap(this.mapDesign2);
+                this.map[this.currentLevel-1].restartMap(this.mapDesign2);
                 break;
             case 3:
-                this.map[level-1].restartMap(this.mapDesign3);
+                this.map[this.currentLevel-1].restartMap(this.mapDesign3);
                 break;
             case 4:
-                this.map[level-1].restartMap(this.mapDesign4);
+                this.map[this.currentLevel-1].restartMap(this.mapDesign4);
                 break;
             case 5:
-                this.map[level-1].restartMap(this.mapDesign5);
+                this.map[this.currentLevel-1].restartMap(this.mapDesign5);
                 break;
         }
     }
@@ -170,8 +186,9 @@ export default class Levels
         }
     }
 
-    drawMap(canvas, mapSpeed, level, health)
+    drawMap(canvas, mapSpeed, health)
     {
-        return this.map[level-1].drawMap(canvas, mapSpeed, health);
+        this.bg.drawBG(canvas);
+        return this.map[this.currentLevel-1].drawMap(canvas, mapSpeed, health);
     }
 }

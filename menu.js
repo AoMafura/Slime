@@ -8,12 +8,29 @@ const GAMESTATE = {
 }
 
 export default class Menu{
-    constructor(width, height, gameState, level){
+    constructor(width, height, gamestate, level){
         this.gameWidth = width,
         this.gameHeight = height,
-        this.gamestate = gameState
+        this.gamestate = gamestate,
         this.level = level
     }
+
+    //----------------------Getters------------------
+    getState(){
+        return this.gamestate;
+    }
+
+    //------------------------Setters---------------------
+
+    setState(state){
+        this.gamestate = state;
+    }
+
+    setLevel(level){
+        this.level = level;
+    }
+
+    //-------------------------Methods--------------------
 
     draw(ctx){
         console.log(this.gamestate)

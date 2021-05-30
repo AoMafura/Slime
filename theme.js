@@ -19,6 +19,7 @@ export default class Theme
     //---------------------Setter----------------------------
 
     setTheme(currentLevel){
+        
         switch(currentLevel){
             case 1:
             case 2:

@@ -36,6 +36,12 @@ export default class Unit
         return this.slashDuration;
     }
 
+    //--------------Setters-----------------------
+
+    setSlashDuration(currentLevel, mapSpeed){
+        this.slashDuration = (150 + (35*currentLevel))/(mapSpeed*2);
+    }
+
     setSlashZero(){
         this.slash = 0;
     }
@@ -70,6 +76,7 @@ export default class Unit
     }
 
     slashCommand(){
+        console.log(this.slashDuration);
         oraSound[this.sound % oraCount].replay(this.volume);
         this.sound++;
         this.slash = this.slashDuration;

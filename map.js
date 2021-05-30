@@ -42,6 +42,13 @@ export default class Map
         return this.unit;
     }
 
+    //------------------- Setters --------------------------
+
+    setWallGap(mapSpeed){
+        this.wallGap = 10*mapSpeed;
+        this.indexWidth = this.wallSize + this.wallGap;
+    }
+
     //------------------- Methods ---------------------------
 
     restartMap(mapDesign){
