@@ -101,15 +101,13 @@ export default class Menu{
             ctx.font = "bold 100px Courier New"
             ctx.fillStyle = "#3DC0EA"
             ctx.textAlign = "center"
-            ctx.fillText("CONTROLS", this.gameWidth/2, 200)
+            ctx.fillText("CONTROLS", this.gameWidth/2, 300)
 
             ctx.font = "30px Courier New"
             ctx.fillStyle = "white"
             ctx.textAlign = "center"
             ctx.fillText("[w] [S] / [↑] [↓]    : CHANGE LANE", this.gameWidth/2, 400)
             ctx.fillText("[D] / [K] / [L] : ATTACK", this.gameWidth/2, 450)
-
-            ctx.fillText("Game Objectives: ", 300, 550)
         }
         
         if(this.gamestate == GAMESTATE.LEVELS){
