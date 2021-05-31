@@ -95,6 +95,9 @@ function sound(src) {
         this.sound.pause();
         this.sound.currentTime=0;
     }
+    this.pause = function(){
+        this.sound.pause();
+    }
 }
 
 explodeSound = new sound("./Assets/explodeSound.mp3");

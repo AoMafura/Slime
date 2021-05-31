@@ -5,17 +5,32 @@ export default class Score{
         this.combo = combo
     }
 
-    setScore(score){
-        this.score = score
+    //setter------------------------
+    
+    setHighScore(){
+        if(this.highscore < this.score){
+            this.highscore = this.score;
+        }
+        this.resetScore()
     }
 
-    setHighscore(highscore){
-        this.highscore = highscore 
+    incrementScore(score){
+        this.score = this.score + (score * (1+this.combo*0.01))
     }
 
-    setCombo(combo){
-        this.combo = combo
+    resetScore(){
+        this.score = 0;
     }
+
+    incrementCombo(combo){
+        this.combo+=combo%2;
+    }
+
+    resetCombo(){
+        this.combo = 0;
+    }
+
+    //Getter------------------------------
 
     getScore(){
         return this.score
@@ -28,6 +43,8 @@ export default class Score{
     getCombo(){
         return this.combo
     }
+
+    //Methods------------------------------
 
     draw(ctx){
         ctx.font = "25px Courier New"

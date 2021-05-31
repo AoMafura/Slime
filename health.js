@@ -38,7 +38,7 @@ export default class Health
             painSound[this.damageSound % painCount].replay(this.volume);
             this.damageSound++;
         }
-        return ;
+        return heal;
     }
 
     drawHealth(canvas){

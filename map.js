@@ -24,6 +24,8 @@ export default class Map
         }
         this.frame = 0;
         this.enemi = 0;
+        this.score = new Score(0, 0, 0)
+        this.scoreAdd = 0;
     }
 
     //------------------- Getters --------------------------
@@ -38,6 +40,10 @@ export default class Map
 
     getUnit(){
         return this.unit;
+    }
+
+    getScore(){
+        return this.score;
     }
 
     //------------------- Setters --------------------------
@@ -58,9 +64,8 @@ export default class Map
     drawMap(canvas, mapSpeed, health)
     {
         var x, y, xPos, yPos, index = 0, lane = 0, playing = 1, wallSize, adjustSize, adjustPos;
-        let score = new Score(1000000, 2000000, 500)
 
-        score.draw(canvas)
+        this.score.draw(canvas)
 
         for(x = 0; x < this.mapLength.x; x++){
             for(y = 0; y < this.mapLength.y; y++){
@@ -102,7 +107,7 @@ export default class Map
                 }
             }
         }
-        if(xPos < 0){
+        if(xPos < 0){ //Map/Game has Ended.
             playing = 0;
         }
         this.mapXPosition -= mapSpeed;
@@ -151,6 +156,7 @@ export default class Map
         var xPos = unit.getXPos(), yPos = unit.getYPos(), unitSize = unit.getSize();
         var xCollision = this.detectCollision(this.mapXPosition, yPos, unitSize, xPos);
         var yIndex;
+        var damage;
 
         if(yPos == this.topLane){
             yIndex = 0;
@@ -161,10 +167,18 @@ export default class Map
 
         if(xCollision >= 0 ){ //
             if(unit.getSlash() == unit.getSlashDuration()){
-                health.takeDamage(this.destroyWall(yIndex, xCollision));
+                if(this.map[yIndex][xCollision]==1){
+                    this.score.incrementCombo(1);
+                    this.score.incrementScore(100);
+                }
+                damage = health.takeDamage(this.destroyWall(yIndex, xCollision));
+                
             }else if(this.map[yIndex][xCollision]==5){
                 health.takeDamage(this.destroyWall(yIndex, xCollision));
+                this.score.resetCombo();
             }
+        }else if(unit.getSlash() == unit.getSlashDuration()){
+            this.score.resetCombo();
         }
     }
 
@@ -232,15 +246,20 @@ export default class Map
                 type = 0; //Gap / No Collision
             }else{
                 type = 1; //Wall Collision
+                if(unitXPosF <= xFront-this.wallGap){ //Slash Score
+                    this.scoreAdd = xFront % unitXPosF;
+                }else{
+                    this.scoreAdd = xBack % unitXPosB;
+                }
             }
         }else{
             // console.log("Error: detectWallorGap() ouput out of Bounds. (" + type + ") " + xFront + " " + xBack + " || " + unitXPosF + " " + unitXPosB);
         }   
         
         //Display Current Index and it's Starting Position
-        // if(this.frame % 30 == 0){
-        //     console.log("DetectWallorGap(" + type + "): " + xFront + " " + xBack + " || " + unitXPosF + " " + unitXPosB);
-        // }
+        if(this.frame % 30 == 0){
+            console.log("DetectWallorGap(" + type + "): " + xFront + " " + xBack + " || " + unitXPosF + " " + unitXPosB + " Score: " + this.scoreAdd);
+        }
 
         return type;
     }

@@ -87,7 +87,7 @@ function playerCommand(e){
     }else if(e.keyCode == 83 || e.keyCode == 40){ //S or Down
         yTravel = unitSpeed;
 
-    }else if(e.keyCode == 32 && health.getHealth() > 0){ // Space, Enter or Esc (Start/Pause Game)
+    }else if(e.keyCode == 32 && health.getHealth() > 0){ // Space (Start/Pause Game)
         mapSpeed = 3 + (3 * level.getCurrentLevel());
         xTravel += mapSpeed - (xTravel * 2);
         
@@ -96,25 +96,27 @@ function playerCommand(e){
         theme.setTheme(level.getCurrentLevel());
         gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), menu.getState());
 
-    }else if(e.keyCode == 77){ //MENU
+    }else if(e.keyCode == 77 || e.keyCode == 27){ //MENU (M/ESC)
         xTravel = 0;
 
         menu.setState(GAMESTATE.MENU);
+        theme.setTheme(level.getCurrentLevel());
+        gameTheme[theme.getCurrentTheme()].pause();
 
-    }else if(e.keyCode == 67 && menu.getState() == GAMESTATE.MENU){ //CONTROLS MENU
+    }else if(e.keyCode == 67 && menu.getState() == GAMESTATE.MENU){ //CONTROLS MENU (M)
         menu.setState(GAMESTATE.CONTROLS)
      
-    }else if(e.keyCode == 16 && menu.getState() == GAMESTATE.MENU){ //CHOOSE A LEVEL MENU
+    }else if(e.keyCode == 16 && menu.getState() == GAMESTATE.MENU){ //CHOOSE A LEVEL MENU (SHIFT)
         menu.setState(GAMESTATE.LEVELS)
 
-    }else if(e.keyCode == 86 && menu.getState() == GAMESTATE.MENU){ //HOW TO PLAY MENU
+    }else if(e.keyCode == 72 && menu.getState() == GAMESTATE.MENU){ //HOW TO PLAY MENU (H)
         menu.setState(GAMESTATE.INSTRUCTIONS)
-        console.log("HOW TO PLAY")
 
-    }else if(e.keyCode == 49 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 1
+    }else if(e.keyCode == 49 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 1 (1)
         currentLevel = 1;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
+        level.getMap(level.getCurrentLevel()).getScore().resetScore();
         level.setCurrentLevel(currentLevel)
         level.getBG().setBG(currentLevel)
         level.restartLevel();
@@ -129,6 +131,7 @@ function playerCommand(e){
         currentLevel = 2;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
+        level.getMap(level.getCurrentLevel()).getScore().resetScore();
         level.setCurrentLevel(currentLevel)
         level.getBG().setBG(currentLevel)
         level.restartLevel();
@@ -143,6 +146,7 @@ function playerCommand(e){
         currentLevel = 3;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
+        level.getMap(level.getCurrentLevel()).getScore().resetScore();
         level.setCurrentLevel(currentLevel)
         level.getBG().setBG(currentLevel)
         level.restartLevel();
@@ -157,6 +161,7 @@ function playerCommand(e){
         currentLevel = 4;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
+        level.getMap(level.getCurrentLevel()).getScore().resetScore();
         level.setCurrentLevel(currentLevel)
         level.getBG().setBG(currentLevel)
         level.restartLevel();
@@ -171,6 +176,7 @@ function playerCommand(e){
         currentLevel = 5;   
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
+        level.getMap(level.getCurrentLevel()).getScore().resetScore();
         level.setCurrentLevel(currentLevel)
         level.getBG().setBG(currentLevel)
         level.restartLevel();
@@ -181,7 +187,7 @@ function playerCommand(e){
         menu.setLevel(currentLevel)
         menu.setState(GAMESTATE.INTRO)
 
-    }else if(e.keyCode == 68 || e.keyCode == 75 || e.keyCode == 76){ // D or K or L (Slash/Attack)
+    }else if(e.keyCode == 68 || e.keyCode == 70 || e.keyCode == 75 || e.keyCode == 76){ // D or F or or K or L (Slash/Attack)
         if(unit.getSlash() <= 0 && xTravel != 0){
             unit.slashCommand();
         }
@@ -198,6 +204,7 @@ function resetCommands(){
 
     if(health.getHealth() <= 0 || level.getPlaying() == 0){
         xTravel = 0;
+            level.getMap(level.getCurrentLevel()).getScore().setHighScore();
             level.restartLevel(level.getCurrentLevel());
             health.refreshHealth();
             unit.refreshUnitPos();
