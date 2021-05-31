@@ -58,7 +58,7 @@ export default class Map
     drawMap(canvas, mapSpeed, health)
     {
         var x, y, xPos, yPos, index = 0, lane = 0, playing = 1, wallSize, adjustSize, adjustPos;
-        let score = new Score()
+        let score = new Score(1000000, 2000000, 500)
 
         score.draw(canvas)
 
