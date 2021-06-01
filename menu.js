@@ -178,12 +178,12 @@ export default class Menu{
             ctx.fillText("Destroy the fireballs and prevent them from burning the environment.", 885, 330)
             ctx.fillText("You will lose 1 health if a fireball reaches the edge of the map.", 868, 360)
 
-            ctx.fillText("Avoid the Pink Slimes. They may be a cute but they're pink and violent!", 905, 410)
+            ctx.fillText("Avoid the Pink Slimes. They may be cute but they're pink and violent!", 890, 410)
 
             ctx.fillText("A Concoction of Blue Slimy Substances. Break the potion to recover Health.", 925, 490)
 
             ctx.fillText("The current number of Blue Flame Fireballs destroyed without losing health.", 930, 570)
-            ctx.fillText("Increase your score gain with higher with higher Combo.", 809, 600)
+            ctx.fillText("Increase your score gain with higher with higher Combo!", 809, 600)
 
             ctx.fillText("Your current score. Increase your score by destroying Blue Flame Fireballs.", 930, 650)
 

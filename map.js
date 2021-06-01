@@ -131,7 +131,7 @@ export default class Map
     destroyWall(yIndex, xIndex){
         var heal = 0;
         if(this.map[yIndex][xIndex] == 1){
-            explodeSound.replay(.3);
+            explodeSound.replay(.4);
         }else if(this.map[yIndex][xIndex]==4) {
             glassSound.replay(.3);
             heal += 1;

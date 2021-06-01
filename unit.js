@@ -76,7 +76,6 @@ export default class Unit
     }
 
     slashCommand(){
-        console.log(this.slashDuration);
         oraSound[this.sound % oraCount].replay(this.volume);
         this.sound++;
         this.slash = this.slashDuration;
