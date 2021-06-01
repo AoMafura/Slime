@@ -20,6 +20,7 @@ export default class Score{
 
     resetScore(){
         this.score = 0;
+        this.combo = 0;
     }
 
     incrementCombo(combo){
@@ -47,7 +48,13 @@ export default class Score{
     //Methods------------------------------
 
     draw(ctx){
-        ctx.font = "25px Courier New"
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)"
+        ctx.fillRect(950, 50, 500, 130)
+
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)"
+        ctx.fillRect(0, 690, 300, 60)
+
+        ctx.font = "bold 30px Courier New"
         ctx.fillStyle = "white"
         ctx.textAlign = "center"
         ctx.fillText("High Score : " + this.highscore, 1160, 95)

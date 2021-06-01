@@ -89,6 +89,7 @@ export default class Map
                                 this.destroyWall(y, x);
                             }else if(xPos < -20 && xPos >= -70){
                                 this.destroyWall(y, x);
+                                this.score.resetCombo()
                                 if(this.map[y][x]==0){
                                     health.takeDamage(-1,1);
                                 }

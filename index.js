@@ -1,7 +1,6 @@
 import Unit from '/unit.js';
 import Levels from '/level.js';
 import Health from '/health.js';
-import Background from '/background.js';
 import Theme from '/theme.js';
 import Menu from '/menu.js'
 
@@ -96,7 +95,7 @@ function playerCommand(e){
         theme.setTheme(level.getCurrentLevel());
         gameTheme[theme.getCurrentTheme()].play(theme.getVolume(), menu.getState());
 
-    }else if(e.keyCode == 77 || e.keyCode == 27){ //MENU (M/ESC)
+    }else if(e.keyCode == 77 || e.keyCode == 27 && menu.getState() == GAMESTATE.INTRO || menu.getState() == GAMESTATE.PAUSED){ //MENU (M/ESC)
         xTravel = 0;
 
         menu.setState(GAMESTATE.MENU);
@@ -112,7 +111,7 @@ function playerCommand(e){
     }else if(e.keyCode == 72 && menu.getState() == GAMESTATE.MENU){ //HOW TO PLAY MENU (H)
         menu.setState(GAMESTATE.INSTRUCTIONS)
 
-    }else if(e.keyCode == 49 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 1 (1)
+    }else if(e.keyCode == 49 && menu.getState() == GAMESTATE.LEVELS){ //CHOOSE LEVEL 1 (1)
         currentLevel = 1;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
@@ -127,7 +126,7 @@ function playerCommand(e){
         menu.setLevel(currentLevel)
         menu.setState(GAMESTATE.INTRO)
 
-    }else if(e.keyCode == 50 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 2
+    }else if(e.keyCode == 50 && menu.getState() == GAMESTATE.LEVELS){ //CHOOSE LEVEL 2
         currentLevel = 2;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
@@ -142,7 +141,7 @@ function playerCommand(e){
         menu.setLevel(currentLevel)
         menu.setState(GAMESTATE.INTRO)
 
-    }else if(e.keyCode == 51 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 3
+    }else if(e.keyCode == 51 && menu.getState() == GAMESTATE.LEVELS){ //CHOOSE LEVEL 3
         currentLevel = 3;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
@@ -157,7 +156,7 @@ function playerCommand(e){
         menu.setLevel(currentLevel)
         menu.setState(GAMESTATE.INTRO)
 
-    }else if(e.keyCode == 52 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 4
+    }else if(e.keyCode == 52 && menu.getState() == GAMESTATE.LEVELS){ //CHOOSE LEVEL 4
         currentLevel = 4;
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
@@ -166,13 +165,13 @@ function playerCommand(e){
         level.getBG().setBG(currentLevel)
         level.restartLevel();
         level.getMap(currentLevel).setWallGap(mapSpeed);
-        mapSpeed = 3 + (3 * level.getCurrentLevel());
+        unit.setSlashDuration(currentLevel, mapSpeed);
         health.refreshHealth();
 
         menu.setLevel(currentLevel)
         menu.setState(GAMESTATE.INTRO)
 
-    }else if(e.keyCode == 53 && menu.getState() == GAMESTATE.LEVELS){ //CHOSE LEVEL 5
+    }else if(e.keyCode == 53 && menu.getState() == GAMESTATE.LEVELS){ //CHOOSE LEVEL 5
         currentLevel = 5;   
         mapSpeed = 3 + (3 * currentLevel);
         gameTheme[theme.getCurrentTheme()].stop();
