@@ -9,7 +9,7 @@ export default class Health
         this.maxHP = unitHP;
         this.heartSize = heartSize;
         this.damageSound = 0;
-        this.volume = 0.7
+        this.volume = 0.16
     }
 
     //---------------------Getter----------------------------

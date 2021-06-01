@@ -11,7 +11,7 @@ export default class Unit
         this.slashDuration = slashDuration;
         this.slash = 0;
         this.sound = 0;
-        this.volume = 0.7;
+        this.volume = 0.35;
     }
 
     //---------------Getters---------------------
